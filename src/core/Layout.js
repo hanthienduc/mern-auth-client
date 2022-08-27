@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavLink from 'react-bootstrap/NavLink';
 
-import { Link } from 'react-router-dom'
+import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 
 const Layout = ({ children }) => {
 
@@ -11,8 +11,9 @@ const Layout = ({ children }) => {
     <Navbar bg="primary" variant="dark">
       <Container>
         <Nav className="me-auto">
-          <NavLink as={Link} to="/" >Home</NavLink>
-          <NavLink as={Link} to="/signup" >Signup</NavLink>
+          <CustomLink as={Link} to="/" >Home</CustomLink>
+          <CustomLink as={Link} to="/signin" >Signin</CustomLink>
+          <CustomLink as={Link} to="/signup" >Signup</CustomLink>
         </Nav>
       </Container>
     </Navbar>
@@ -25,6 +26,16 @@ const Layout = ({ children }) => {
         {children}
       </Container>
     </>
+  )
+}
+
+function CustomLink({ to, children, ...props }) {
+  const resolvedPath = useResolvedPath(to)
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true })
+
+  return (
+    <NavLink className={isActive ? 'active' : ''}
+      as={Link} to={to} {...props}> {children}</NavLink >
   )
 }
 

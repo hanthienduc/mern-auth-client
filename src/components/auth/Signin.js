@@ -1,27 +1,26 @@
 import { useState } from "react"
-import { useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import Layout from "../../core/Layout"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { makeRequest } from "../../service/makeRequest"
-const Signup = () => {
+const Signin = () => {
 
 
   const initialState = {
-    name: "",
     email: "",
     password: "",
     buttonText: 'Submit'
   }
 
-  const [formSignUp, setFormSignUp] = useState(initialState)
+  const [formSignIn, setFormSignIn] = useState(initialState)
 
-  const { name, email, password, buttonText } = formSignUp
+  const { email, password, buttonText } = formSignIn
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormSignUp(prevForm => {
+    setFormSignIn(prevForm => {
       return {
         ...prevForm,
         [name]: value
@@ -31,32 +30,31 @@ const Signup = () => {
 
   const handelSubmit = async (e) => {
     e.preventDefault()
-    setFormSignUp(prevForm => {
+    setFormSignIn(prevForm => {
       return {
         ...prevForm,
         buttonText: 'Submitting'
       }
     })
-    makeRequest('/signup', {
+    makeRequest('/signin', {
       method: 'POST',
-      data: { name, email, password }
+      data: { email, password }
     }).then((data) => {
-      setFormSignUp(prevForm => ({ ...prevForm, buttonText: 'Submitted' }))
-      toast.success('SIGNUP SUCCESS', data.message)
+      console.log('SIGNIN SUCCESS', data)
+      // save the response (user, token) localStorage/cookie
+      setFormSignIn(prevForm => ({ ...initialState, buttonText: 'Submitted' }))
+      toast.success(`Hey${data.user.name}, Welcome back!`)
     }).catch((err) => {
-      toast.error('SIGNUP ERROR', err)
+      console.log('SIGNIN ERROR', err)
+      toast.error('SIGNIN ERROR', err)
     }).finally(() => {
-      setFormSignUp(initialState)
+      setFormSignIn(initialState)
     })
 
   }
 
-  const signupForm = () => (
+  const signinForm = () => (
     <Form onSubmit={handelSubmit}>
-      <FormGroup>
-        <FormLabel className="text-muted">Name</FormLabel>
-        <FormControl placeholder="Enter name" name="name" onChange={handleChange} type="text" value={name} />
-      </FormGroup>
       <FormGroup>
         <FormLabel className="text-muted">Email</FormLabel>
         <FormControl placeholder="Enter email" name="email" onChange={handleChange} type="email" value={email} />
@@ -74,11 +72,11 @@ const Signup = () => {
     <Layout>
       <div className="col-d-6">
         <ToastContainer />
-        <h1 className="p-5 text-center">Signup</h1>
-        {signupForm()}
+        <h1 className="p-5 text-center">Signin</h1>
+        {signinForm()}
       </div>
     </Layout>
   )
 }
 
-export default Signup
+export default Signin
