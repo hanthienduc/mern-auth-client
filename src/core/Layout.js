@@ -1,12 +1,21 @@
-import { Container, NavLink } from "react-bootstrap"
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavLink from 'react-bootstrap/NavLink';
+
+import { Link } from 'react-router-dom'
+
 const Layout = ({ children }) => {
 
   const nav = () => (
-    <ul className="nav nav-tabs bg-primary">
-      <li className="nav-item">
-        <NavLink href="/" className="text-light">Home</NavLink>
-      </li>
-    </ul>
+    <Navbar bg="primary" variant="dark">
+      <Container>
+        <Nav className="me-auto">
+          <NavLink as={Link} to="/" >Home</NavLink>
+          <NavLink as={Link} to="/signup" >Signup</NavLink>
+        </Nav>
+      </Container>
+    </Navbar>
   )
 
   return (
