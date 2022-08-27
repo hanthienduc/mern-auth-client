@@ -1,12 +1,12 @@
-import { useState } from "react"
-import {useNavigate } from 'react-router-dom'
+import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom'
 import Layout from "../../core/Layout"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { makeRequest } from "../../service/makeRequest"
+import { authenticate, isAuth } from "../../helpers/helpers"
 const Signin = () => {
-
 
   const initialState = {
     email: "",
@@ -42,8 +42,11 @@ const Signin = () => {
     }).then((data) => {
       console.log('SIGNIN SUCCESS', data)
       // save the response (user, token) localStorage/cookie
-      setFormSignIn(prevForm => ({ ...initialState, buttonText: 'Submitted' }))
-      toast.success(`Hey${data.user.name}, Welcome back!`)
+      authenticate(data, () => {
+        setFormSignIn(prevForm => ({ ...initialState, buttonText: 'Submitted' }))
+        toast.success(`Hey${data.user.name}, Welcome back!`)
+        navigate('/')
+      })
     }).catch((err) => {
       console.log('SIGNIN ERROR', err)
       toast.error('SIGNIN ERROR', err)
@@ -52,6 +55,14 @@ const Signin = () => {
     })
 
   }
+
+  useEffect(() => {
+    if (isAuth()) {
+      return navigate('/')
+    }
+  }, [])
+
+
 
   const signinForm = () => (
     <Form onSubmit={handelSubmit}>

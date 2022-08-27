@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import Layout from "../../core/Layout"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.min.css'
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { makeRequest } from "../../service/makeRequest"
+import { isAuth } from "../../helpers/helpers"
 const Signup = () => {
 
 
@@ -70,6 +71,14 @@ const Signup = () => {
   )
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuth()) {
+      return navigate('/')
+    }
+
+  }, [])
+
   return (
     <Layout>
       <div className="col-d-6">

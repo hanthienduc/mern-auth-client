@@ -3,17 +3,33 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavLink from 'react-bootstrap/NavLink';
 
-import { Link, useMatch, useResolvedPath } from 'react-router-dom'
+import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom'
+import { isAuth, signout } from '../helpers/helpers';
 
 const Layout = ({ children }) => {
-
+  const navigate = useNavigate()
   const nav = () => (
     <Navbar bg="primary" variant="dark">
       <Container>
         <Nav className="me-auto">
           <CustomLink as={Link} to="/" >Home</CustomLink>
-          <CustomLink as={Link} to="/signin" >Signin</CustomLink>
-          <CustomLink as={Link} to="/signup" >Signup</CustomLink>
+          {!isAuth() && (
+            <>
+              <CustomLink as={Link} to="/signin" >Signin</CustomLink>
+              <CustomLink as={Link} to="/signup" >Signup</CustomLink>
+            </>
+          )}
+          {isAuth() && (
+            <>
+              <span style={{ cursor: 'pointer' }} className="nav-link" onClick={() => {
+                signout(() => {
+                  navigate('/', { replace: true })
+                })
+              }}>SignOut
+              </span>
+            </>
+
+          )}
         </Nav>
       </Container>
     </Navbar>
