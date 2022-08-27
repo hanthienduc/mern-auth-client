@@ -5,6 +5,8 @@ import Signin from './components/auth/Signin'
 import Signup from './components/auth/Signup'
 import Private from './core/Private'
 import PrivateRoute from './components/auth/PrivateRoute'
+import Admin from './core/Admin'
+import AdminRoute from './components/auth/AdminRoute'
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -16,6 +18,9 @@ const AppRoutes = () => {
         <Route path='/private' element={<PrivateRoute>
           <Private />
         </PrivateRoute>} />
+        <Route path='/admin' element={<AdminRoute>
+          <Admin />
+        </AdminRoute>} />
       </Routes>
     </BrowserRouter>
   )

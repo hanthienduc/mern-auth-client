@@ -20,6 +20,10 @@ const Layout = ({ children }) => {
             </>
           )}
           {isAuth() && (
+            <CustomLink as={Link}
+              to={isAuth().role === 'admin' ? '/admin' : 'private'} >{isAuth().name}</CustomLink>
+          )}
+          {isAuth() && (
             <>
               <span style={{ cursor: 'pointer' }} className="nav-link" onClick={() => {
                 signout(() => {

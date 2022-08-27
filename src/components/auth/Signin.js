@@ -45,7 +45,7 @@ const Signin = () => {
       authenticate(data, () => {
         setFormSignIn(prevForm => ({ ...initialState, buttonText: 'Submitted' }))
         toast.success(`Hey${data.user.name}, Welcome back!`)
-        navigate('/')
+        isAuth() && isAuth().role === 'admin' ? navigate('/admin') : navigate('/private')
       })
     }).catch((err) => {
       console.log('SIGNIN ERROR', err)
