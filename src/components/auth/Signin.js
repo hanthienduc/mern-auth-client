@@ -7,6 +7,7 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap
 import { makeRequest } from "../../service/makeRequest"
 import { authenticate, isAuth } from "../../helpers/helpers"
 import Google from "./Google"
+import Facebook from "./Facebook"
 
 const Signin = () => {
 
@@ -27,6 +28,12 @@ const Signin = () => {
         ...prevForm,
         [name]: value
       }
+    })
+  }
+
+  const informParent = data => {
+    authenticate(data, () => {
+      isAuth() && isAuth().role === 'admin' ? navigate('/admin') : navigate('/private')
     })
   }
 
@@ -87,12 +94,16 @@ const Signin = () => {
       <div className="col-d-6">
         <ToastContainer />
         <h1 className="p-5 text-center">Signin</h1>
-        <Google />
         {signinForm()}
         <br />
         <Link to="/auth/password/forgot" className="btn btn-sm btn-outline-danger">
           Forgot Password
         </Link>
+        <br />
+        <br />
+        <Google informParent={informParent} />
+        <br />
+        <Facebook informParent={informParent} />
       </div>
     </Layout>
   )
