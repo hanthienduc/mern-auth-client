@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { makeRequest } from "../../service/makeRequest"
 import { authenticate, isAuth } from "../../helpers/helpers"
+import Google from "./Google"
+
 const Signin = () => {
 
   const initialState = {
@@ -79,11 +81,13 @@ const Signin = () => {
   )
 
   const navigate = useNavigate()
+
   return (
     <Layout>
       <div className="col-d-6">
         <ToastContainer />
         <h1 className="p-5 text-center">Signin</h1>
+        <Google />
         {signinForm()}
         <br />
         <Link to="/auth/password/forgot" className="btn btn-sm btn-outline-danger">
