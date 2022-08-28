@@ -2,7 +2,7 @@ import cookie from 'js-cookie'
 
 // set in cookie
 export const setCookie = (key, value) => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     cookie.set(key, value, {
       expires: 1
     })
@@ -10,7 +10,7 @@ export const setCookie = (key, value) => {
 }
 // remove from cookie
 export const removeCookie = (key) => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     cookie.remove(key, {
       expires: 1
     })
@@ -19,20 +19,20 @@ export const removeCookie = (key) => {
 // get from cookie such as stored token
 // will be useful when we need to make request to server with token
 export const getCookie = (key) => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     return cookie.get(key)
   }
 }
 
 // set in localStorage
 export const setLocalStorage = (key, value) => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     localStorage.setItem(key, JSON.stringify(value))
   }
 }
 // remove from localStorage
 export const removeLocalStorage = (key) => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     localStorage.removeItem(key)
   }
 }
@@ -46,7 +46,7 @@ export const authenticate = (data, next) => {
 }
 // access user info from localStorage
 export const isAuth = () => {
-  if (window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     const cookieChecked = getCookie('token')
     if (cookieChecked) {
       if (localStorage.getItem('user')) {
@@ -61,5 +61,15 @@ export const isAuth = () => {
 export const signout = (next) => {
   removeCookie('token')
   removeLocalStorage('user')
+  next()
+}
+
+export const updateUser = (data, next) => {
+  console.log('UPDATE USER IN LOCALSTORAGE HELPERS', data)
+  if (typeof window !== 'undefined') {
+    let auth = JSON.parse(localStorage.getItem('user'))
+    auth = data
+    localStorage.setItem('user', JSON.stringify(auth))
+  }
   next()
 }

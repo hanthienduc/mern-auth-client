@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
           )}
           {isAuth() && (
             <CustomLink as={Link}
-              to={isAuth().role === 'admin' ? '/admin' : 'private'} >{isAuth().name}</CustomLink>
+              to={isAuth().role === 'admin' ? '/admin' : '/private'} >{isAuth().name}</CustomLink>
           )}
           {isAuth() && (
             <>

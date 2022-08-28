@@ -6,9 +6,8 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import { makeRequest } from "../../service/makeRequest"
 import { isAuth } from "../../helpers/helpers"
+
 const Signup = () => {
-
-
   const initialState = {
     name: "",
     email: "",
@@ -74,10 +73,10 @@ const Signup = () => {
 
   useEffect(() => {
     if (isAuth()) {
-      return navigate('/')
+      navigate('/', { replace: true })
     }
 
-  }, [])
+  }, [navigate])
 
   return (
     <Layout>
