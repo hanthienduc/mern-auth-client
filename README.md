@@ -2,7 +2,7 @@
 
 ## CLIENT Boilerplate for handling with auth api 
 
-## install && setup 
+## Install && Setup 
 - In the command line run `git clone https://github.com/hanthienduc/mern-auth-client` 
 - next navigate to the project folder and run `npm install` to install neccessary packages 
 - add neccessary `env` variables create `.env`  and includethe following
@@ -11,7 +11,7 @@
   - REACT_APP_FACEBOOK_ID=`YOUR_FACEBOOK_APP_ID`
   
   
-## start the app in the local
+## Start the app in the local
 - run `npm start`, your app is running on http://localhost:3000
 
 ## Server api repo 
