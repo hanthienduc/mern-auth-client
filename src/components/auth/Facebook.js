@@ -5,10 +5,11 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 const Facebook = ({ informParent }) => {
 
   const responseFacebook = (response) => {
-    console.log(response);
+    // console.log(response);
+
     makeRequest(`/facebook-login`, {
       method: 'POST',
-      data: { userId: response.userId, accessToken: response.accessToken }
+      data: { userId: response.userID, accessToken: response.accessToken }
     }).then(data => {
       console.log('Facebook SIGNIN SUCCESS', data)
       // inform parent component
